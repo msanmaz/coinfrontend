@@ -19,30 +19,15 @@ import socketIOClient from "socket.io-client";
 import Nav from '../components/Navbar'
 import WithBackgroundImage from '../components/Hero'
 import Carousel from '../components/Carousel'
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+import Cache from '../public/cache.json'
 
-
-
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const res = await fetch('http://localhost:3000/')
-  const posts = await res.json()
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      posts,
-    },
-    revalidate: 1,
-  }
-}
+const carouseldata = Cache.data
 
 
 
 
-export default function Home({ posts }) {
+
+export default function Home() {
 
 
   const [crypto, setCrypto] = useState([])
@@ -58,7 +43,7 @@ export default function Home({ posts }) {
 
   }, []);
 
-
+  console.log(crypto)
   const searchItems = (searchValue) => {
     setSearchInput(searchValue)
     if (searchInput !== '') {
@@ -82,7 +67,7 @@ export default function Home({ posts }) {
       </Head>
       <Nav />
       <WithBackgroundImage />
-      <Carousel posts={posts} />
+      <Carousel posts={carouseldata} />
 
 
       <Stack py={4} justifyContent={'center'} alignItems='center'>
